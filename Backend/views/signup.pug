@@ -1,5 +1,13 @@
 extends base
 block content
-    h1 Welcome To Sign 
+    h1 Welcome To SignUp
+    h3 #{usererr_msg}
+    form(action="/signup" method='post')
+        lable Username:
+        input(type="text" name='name' autocomplete='off')
+        lable Password:
+        input(type="password" name="password" autocomplete="off")
+        input(type="submit", value="Submit")
+
     
     
