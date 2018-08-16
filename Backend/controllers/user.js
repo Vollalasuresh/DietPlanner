@@ -32,7 +32,7 @@ router.post('/signup',passport.authenticate('local.signup',{
     failureRedirect:'/signup',
     failureFlash:true,
 }))
-router.post('/login',passport.authenticate('local.',{
+router.post('/login',passport.authenticate('local.login',{
     successRedirect:'/show',
     failureRedirect:'/login',
     failureFlash:true,
