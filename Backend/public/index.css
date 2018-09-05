@@ -2,3 +2,17 @@
 {
     display: block;
 }
+.signup *
+{
+display: block;
+}
+.links *
+{
+    /* display: block; */
+    padding-left: 1rem;
+
+}
+.logout
+{
+    float: right;
+}

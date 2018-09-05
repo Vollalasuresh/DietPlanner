@@ -1,3 +1,8 @@
 extends base
 block content
-    h1 Welcome To View Plans
+    h1 Welcome #{u.name} To View Plans
+    a(href="logout" class='logout') Logout
+    div.links
+        a(href="insertplan") Insert Plan
+        a(href="viewplans") View Plans
+        a(href="editplans") Edit Plans
