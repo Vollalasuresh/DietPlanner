@@ -1,6 +1,10 @@
 extends base
 block content
-    h2 #{u.name} Add your diet plans
+    a(href="logout" class='logout') Logout
+    
+    if a==true
+        h2 #{day_err} #{days.day} 
+        | insted edit your plan
     //- label Days:
     //- select(name="Day" id='myselect' ) Days
     //-     option(value="Select") Select
@@ -30,51 +34,53 @@ block content
     //-     input(type="text" name="item" placeholder='Item')
     //- input(type="submit", value="Submit" class='click')
     //- button(class='send') Send
-    form(action="/insertplan", method="post")
-        label Day:
-        input(type="text", name="day" autocomplete='off')
-        br
-        br
-        h4 Breakfast:
-        label Item:
-        input(type='text' name='item1' autocomplete='off')
-        br
-        br
-        label Item:
-        input(type='text' name='item2' autocomplete='off')
-        br
-        br
-        label Item:
-        input(type='text' name='item3' autocomplete='off')
-        br
-        br
-        h4 Lunch:
-        label Item:
-        input(type='text' name='item4' autocomplete='off')
-        br
-        br
-        label Item:
-        input(type='text' name='item5' autocomplete='off')
-        br
-        br
-        label Item:
-        input(type='text' name='item6' autocomplete='off')
-        br
-        br
-        h4 Dinner:
-        label Item:
-        input(type='text' name='item7' autocomplete='off')
-        br
-        br
-        label Item:
-        input(type='text' name='item8' autocomplete='off')
-        br
-        br
-        label Item:
-        input(type='text' name='item9' autocomplete='off')
-        br
-        br
-        input(type='submit' value='Submit')
+    else
+        h2 #{u.name} Add your diet plans
+        form(action="/insertplan", method="post")
+            label Day:
+            input(type="text", name="day" autocomplete='off')
+            br
+            br
+            h4 Breakfast:
+            label Item:
+            input(type='text' name='item1' autocomplete='off')
+            br
+            br
+            label Item:
+            input(type='text' name='item2' autocomplete='off')
+            br
+            br
+            label Item:
+            input(type='text' name='item3' autocomplete='off')
+            br
+            br
+            h4 Lunch:
+            label Item:
+            input(type='text' name='item4' autocomplete='off')
+            br
+            br
+            label Item:
+            input(type='text' name='item5' autocomplete='off')
+            br
+            br
+            label Item:
+            input(type='text' name='item6' autocomplete='off')
+            br
+            br
+            h4 Dinner:
+            label Item:
+            input(type='text' name='item7' autocomplete='off')
+            br
+            br
+            label Item:
+            input(type='text' name='item8' autocomplete='off')
+            br
+            br
+            label Item:
+            input(type='text' name='item9' autocomplete='off')
+            br
+            br
+            input(type='submit' value='Submit')
 
 
    
