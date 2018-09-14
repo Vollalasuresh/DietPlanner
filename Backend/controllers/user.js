@@ -166,6 +166,7 @@ router.get('/deleteplans/:a',(req,res)=>
         res.redirect('/show')
     }).catch(err=>console.log(err))
 })
+
 module.exports = router;
 
 
