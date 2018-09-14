@@ -1,0 +1,52 @@
+extends base
+block content
+    if a==true
+        h2 No plan found for the specified #{day}
+    else
+        H2 Welcome #{data.userName} to edit #{data.day}'s plan
+        form(action="/update", method="post")
+            label Day:
+            input(type="text", name="day" value=data.day autocomplete='off')
+            br
+            br
+            h4 Breakfast
+            label Item: 
+            input(type="text", name="item1",value=data.bf.item1, autocomplete='off')
+            br
+            br
+            label Item: 
+            input(type="text", name="item2",value=data.bf.item2, autocomplete='off')
+            br
+            br
+            label Item: 
+            input(type="text", name="item3",value=data.bf.item3, autocomplete='off')
+            br
+            br
+            h4 Lunch
+            label Item: 
+            input(type="text", name="item4",value=data.ln.item1, autocomplete='off')
+            br
+            br
+            label Item: 
+            input(type="text", name="item5",value=data.ln.item2, autocomplete='off')
+            br
+            br
+            label Item: 
+            input(type="text", name="item6",value=data.ln.item3, autocomplete='off')
+            br
+            br
+            h4 Dinner
+            label Item: 
+            input(type="text", name="item7",value=data.dn.item1, autocomplete='off')
+            br
+            br
+            label Item: 
+            input(type="text", name="item8",value=data.dn.item2, autocomplete='off')
+            br
+            br
+            label Item: 
+            input(type="text", name="item9",value=data.dn.item3, autocomplete='off')
+            br
+            br
+            input(type='submit', value='Update')
+        

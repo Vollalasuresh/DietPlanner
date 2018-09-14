@@ -1,39 +1,11 @@
 extends base
 block content
+    link(rel="stylesheet", href="index.css" type='text/css')
     a(href="logout" class='logout') Logout
     
     if a==true
         h2 #{day_err} #{days.day} 
         | insted edit your plan
-    //- label Days:
-    //- select(name="Day" id='myselect' ) Days
-    //-     option(value="Select") Select
-    //-     option(value="Sunday") Sunday
-    //-     option(value="Monday") Monday
-    //-     option(value="Tuesday") Tuesday
-    //-     option(value="Wednesday") Wednesday
-    //-     option(value="Thursday") Thursday
-    //-     option(value="Friday") Friday
-    //-     option(value="Saturday") Saturday
-    //- br
-    //- br
-    //- h3 Breakfast:
-    //- div.breakfast
-    //-     button Add Item
-    //-     br
-    //-     input(type="text" name="item" placeholder='Item')
-    //- h3 Lunch:
-    //- div.lunch
-    //-     button Add Item
-    //-     br
-    //-     input(type="text" name="item" placeholder='Item')
-    //- h3 Dinner:
-    //- div.Dinner
-    //-     button Add Item  
-    //-     br   
-    //-     input(type="text" name="item" placeholder='Item')
-    //- input(type="submit", value="Submit" class='click')
-    //- button(class='send') Send
     else
         h2 #{u.name} Add your diet plans
         form(action="/insertplan", method="post")
@@ -81,6 +53,37 @@ block content
             br
             br
             input(type='submit' value='Submit')
+             //- label Days:
+    //- select(name="Day" id='myselect' ) Days
+    //-     option(value="Select") Select
+    //-     option(value="Sunday") Sunday
+    //-     option(value="Monday") Monday
+    //-     option(value="Tuesday") Tuesday
+    //-     option(value="Wednesday") Wednesday
+    //-     option(value="Thursday") Thursday
+    //-     option(value="Friday") Friday
+    //-     option(value="Saturday") Saturday
+    //- br
+    //- br
+    //- h3 Breakfast:
+    //- div.breakfast
+    //-     button Add Item
+    //-     br
+    //-     input(type="text" name="item" placeholder='Item')
+    //- h3 Lunch:
+    //- div.lunch
+    //-     button Add Item
+    //-     br
+    //-     input(type="text" name="item" placeholder='Item')
+    //- h3 Dinner:
+    //- div.Dinner
+    //-     button Add Item  
+    //-     br   
+    //-     input(type="text" name="item" placeholder='Item')
+    //- input(type="submit", value="Submit" class='click')
+    //- button(class='send') Send
+   
+   
 
 
    

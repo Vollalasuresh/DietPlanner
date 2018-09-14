@@ -19,7 +19,7 @@ const dpSchema= mongoose.Schema({
             item3:String,
 
         },
-        userId : String,
+        userName : String,
     
 })
 

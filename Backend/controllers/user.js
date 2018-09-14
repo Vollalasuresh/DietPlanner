@@ -1,11 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const passport = require('passport');
-const user = require('../models/user');
 const dp = require('../models/dp');
-
-// d = new dp();
-
 
 const isLoggedIn = (req, res, next) => {
     if (req.isAuthenticated()) {
@@ -14,7 +10,6 @@ const isLoggedIn = (req, res, next) => {
     }
     res.redirect('/login');
 }
-
 
 router.get('/signup', (req, res) => {
     usererr_msg = req.flash('userExist');
@@ -27,111 +22,149 @@ router.get('/login', (req, res) => {
 
     res.render('login', { login_err, password_err });
 })
+
 router.post('/signup', passport.authenticate('local.signup', {
     successRedirect: '/show',
     failureRedirect: '/signup',
     failureFlash: true,
 }))
+
 router.post('/login', passport.authenticate('local.login', {
     successRedirect: '/show',
     failureRedirect: '/login',
     failureFlash: true,
 }))
-router.get('/show', isLoggedIn, (req, res) => {
-    u = req.user;
 
-    res.render('show', { u });
+router.get('/show', isLoggedIn, (req, res) => {
+    // console.log(req.params)
+    res.render('show', { u:req.user });
 
 })
+
 router.get('/logout', (req, res) => {
     req.logout();
     res.redirect('/')
 })
 
-router.get('/insertplan', (req, res) => {
-    u = req.user;
-    a=false;
-    res.render('insert', { u, a});
+router.get('/insertplan', (req, res) => 
+{
+    a = false;
+    
+    res.render('insert', { u:req.user, z:req.url,x:'Add your Diet Plans' });
 })
 
-router.post('/insertplan', (req, res) => {
-
-    u=req.user;
-
-    console.log("From POst", req.body.day);
-    dp.findOne({ day: req.body.day ,userId:req.user.id}, (err, days) => {
-        console.log("from dp.findOnde",days)
-        if (days)
-        {
-            a=true;
-            req.flash("dayError","Your plan is Already added for  ");
-            day_err=req.flash("dayError")
-            console.log("inside if day",day_err);
-            res.render('insert',{u,day_err,days,a});
+router.post('/insertplan', (req, res) =>
+{
+        dp.findOne({ day: req.body.day, userName: req.user.name }, (err, days) => {
+        if (days) {
+            a = true;
+            req.flash("dayError", "Your plan is Already added for  ");
+            day_err = req.flash("dayError")
+            res.render('insert', { u:req.user, day_err, days, a });
         }
-        if(!days)
-        {
-            d= new dp();
+        if (!days) {
+            d = new dp();
+            d.day = req.body.day
+            d.bf.item1 = req.body.item1;
+            d.bf.item2 = req.body.item2;
+            d.bf.item3 = req.body.item3;
+            d.ln.item1 = req.body.item4;
+            d.ln.item2 = req.body.item5;
+            d.ln.item3 = req.body.item6;
+            d.dn.item1 = req.body.item7;
+            d.dn.item2 = req.body.item8;
+            d.dn.item3 = req.body.item9;
+            d.userName = req.user.name;
+            d.save().then(items => {
+                res.redirect('/show')
+            }).catch(err => {
+               res.redirect('/')
 
-            console.log("inside if not day",d)
-            
-        d.day = req.body.day
-        d.bf.item1 = req.body.item1;
-        d.bf.item2 = req.body.item2;
-        d.bf.item3 = req.body.item3;
-        d.ln.item1 = req.body.item4;
-        d.ln.item2 = req.body.item5;
-        d.ln.item3 = req.body.item6;
-        d.dn.item1 = req.body.item7;
-        d.dn.item2 = req.body.item8;
-        d.dn.item3 = req.body.item9;
-        d.userId = req.user.id;
-        console.log("after storing d",d)
-        d.save().then(items => {
-            res.redirect('/show')
-        }).catch(err => {
-            console.log("from post",err)
-            res.redirect('/')
-            
-        })
+            })
         }
 
     })
+})
 
+router.get('/editplans', (req, res) => {
+    res.render('days', { u :req.user.name,y:req.url,type:'Edit Plans'})
+})
+
+router.get('/editplans/:a', (req, res) => {
+    dp.findOne({ day: req.params.a, userName: req.user.name }).then(data => {
+        if (data == null) {
+            a = true;
+            res.render('editor', { data ,day:req.params.a});
+        }
+        if (data != null) {
+            a = false;
+            res.render('editor', { data });
+        }
+    }).catch(err => console.log(err))
+})
+
+router.post('/update', (req, res) => {
+    dp.findOne({ day: req.body.day, userName: req.user.name }).then(data => 
+        {
+            data.bf.item1 = req.body.item1;
+            data.bf.item2 = req.body.item2;
+            data.bf.item3 = req.body.item3;
+
+            data.ln.item1 = req.body.item4;
+            data.ln.item2 = req.body.item5;
+            data.ln.item3 = req.body.item6;
+
+            data.dn.item1 = req.body.item7;
+            data.dn.item2 = req.body.item8;
+            data.dn.item3 = req.body.item9;
+            
+            data.save().then(p => 
+                {
+                    res.redirect('/show');
+                }).catch(err => {console.log(err)});
+    })
 
 })
 
-router.get('/editplans/',(req,res)=>
+router.get('/viewplans', (req, res) => 
 {
-    u=req.user;
-    console.log("edit plans",req.params.name);
-   
-    //  dp.findOne({day:req.body.day}).then(dps=>
-    // {
-        // console.log('from edit route',dps,req.body.day,dps.day);
-        res.render('edit',{u})
-    // })
+
+    res.render('days',{y:req.url,type:"View Plans",u:req.user.name});
 })
 
-
-router.get('/viewplans',(req,res)=>
+router.get('/viewplans/:a', (req, res) => 
 {
-     res.render('view');
+    dp.findOne({ day: req.params.a, userName: req.user.name }).then(dps => {
+        if (dps == null) 
+        {
+            a = true;
+            res.render('plan', { u: req.user.name, day: req.params.a })
+        }
+        if (dps != null) 
+        {
+
+            bfs = Object.values(dps.bf).slice(1, 4);
+            lns = Object.values(dps.ln).slice(1, 4);
+            dns = Object.values(dps.dn).slice(1, 4);
+            res.render('plan', { u: req.user.name, day: req.params.a, dps, bfs, lns, dns });
+        }
+
+    }).catch(err => console.log(err))
+
 })
 
-router.get('/viewplans/:a',(req,res)=>
+router.get('/deleteplans',(req,res)=>
 {
-    dp.findOne({day:req.params.a,userId:req.user.id}).then(dps=>
+    res.render('days',{y:req.url,type:"Delete Plans",u:req.user.name})
+})
+
+router.get('/deleteplans/:a',(req,res)=>
+{
+    dp.remove({day:req.params.a,userName:req.user.name}).then(()=>
     {
-        console.log("Viewing a day's plan ",dps)
-        bfs=Object.values(dps.bf).slice(1,4);
-        console.log(bfs)
-        lns=Object.values(dps.ln).slice(1,4);
-        dns=Object.values(dps.dn).slice(1,4);
-        res.render('plan',{dps,bfs,lns,dns});
-
+        console.log("removed")
+        res.redirect('/show')
     }).catch(err=>console.log(err))
-   
 })
 module.exports = router;
 

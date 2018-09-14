@@ -1,14 +1,16 @@
 extends base
 block content
-    //- link(rel="stylesheet", href="index.css" type='text/css')
-    //- a(href="logout" class='logout') Logout
-    h2 #{dps.day}'s plan
-    ol Breakfast
-        each i in bfs
-            li #{i}
-    ol lunch
-        each i in lns
-            li #{i}
-    ol Dinner
-        each i in dns
-            li #{i}
+    if a== true
+
+        h2 #{u} there are no plans to view for #{day}
+    else
+        h2 #{u} your plan for #{dps.day} is
+        ol Breakfast
+            each i in bfs
+                li #{i}
+        ol lunch
+            each i in lns
+                li #{i}
+        ol Dinner
+            each i in dns
+                li #{i}
