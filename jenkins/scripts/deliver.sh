@@ -1,8 +1,8 @@
 #!/bin/sh
-
-echo 'The following "npm" command runs backend server'
-
-set -x
-echo " current working directory" 
-pwd
-set +x
+ssh ubuntu@15.207.18.233 <<EOF
+ cd ~/node-app
+ git pull
+ npm install — production
+ pm2 restart all
+ exit
+EOF
